@@ -4,9 +4,7 @@ services:
     runtime: docker
     plan: starter
     healthCheckPath: /health
-    dockerCommand: >-
-      sh -c 'PATH="/data/.local/bin:$PATH"
-      exec node openclaw.mjs gateway --allow-unconfigured --bind lan --port 8080'
+    dockerCommand: node openclaw.mjs gateway --allow-unconfigured --bind lan --port 8080
     envVars:
       - key: PORT
         value: "8080"

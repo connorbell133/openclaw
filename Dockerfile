@@ -206,6 +206,8 @@ RUN --mount=type=cache,id=openclaw-bookworm-apt-cache,target=/var/cache/apt,shar
 RUN ln -sf /app/openclaw.mjs /usr/local/bin/openclaw \
  && chmod 755 /app/openclaw.mjs
 
+# Persistent user-installed binaries on mounted volumes (e.g. Render /data disk)
+ENV PATH="/data/.local/bin:${PATH}"
 ENV NODE_ENV=production
 
 # Security hardening: Run as non-root user
