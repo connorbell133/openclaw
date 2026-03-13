@@ -31,6 +31,7 @@ export function attachGatewayWsHandlers(params: GatewayWsRuntimeParams) {
     canvasHostServerPort: params.canvasHostServerPort,
     resolvedAuth: params.resolvedAuth,
     allowHostHeaderOriginFallback: params.allowHostHeaderOriginFallback,
+    allowUnconfigured: params.allowUnconfigured,
     rateLimiter: params.rateLimiter,
     browserRateLimiter: params.browserRateLimiter,
     gatewayMethods: params.gatewayMethods,

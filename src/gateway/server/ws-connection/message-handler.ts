@@ -248,6 +248,8 @@ export function attachGatewayWsMessageHandler(params: {
   resolvedAuth: ResolvedGatewayAuth;
   /** When true, allow Host-header origin fallback for CORS checks. */
   allowHostHeaderOriginFallback?: boolean;
+  /** When true, relax device pairing for unconfigured cloud deploys. */
+  allowUnconfigured?: boolean;
   /** Optional rate limiter for auth brute-force protection. */
   rateLimiter?: AuthRateLimiter;
   /** Browser-origin fallback limiter (loopback is never exempt). */
@@ -284,6 +286,7 @@ export function attachGatewayWsMessageHandler(params: {
     connectNonce,
     resolvedAuth,
     allowHostHeaderOriginFallback: allowHostHeaderOriginFallbackParam,
+    allowUnconfigured: allowUnconfiguredParam,
     rateLimiter,
     browserRateLimiter,
     gatewayMethods,
@@ -541,9 +544,12 @@ export function attachGatewayWsMessageHandler(params: {
         const hasTokenAuth = Boolean(connectParams.auth?.token);
         const hasPasswordAuth = Boolean(connectParams.auth?.password);
         const hasSharedAuth = hasTokenAuth || hasPasswordAuth;
+        const controlUiConfig = configSnapshot.gateway?.controlUi;
         const controlUiAuthPolicy = resolveControlUiAuthPolicy({
           isControlUi,
-          controlUiConfig: configSnapshot.gateway?.controlUi,
+          controlUiConfig: allowUnconfiguredParam
+            ? { ...controlUiConfig, dangerouslyDisableDeviceAuth: true }
+            : controlUiConfig,
           deviceRaw,
         });
         const device = controlUiAuthPolicy.device;

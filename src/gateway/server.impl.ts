@@ -884,6 +884,7 @@ export async function startGatewayServer(
     canvasHostServerPort,
     resolvedAuth,
     allowHostHeaderOriginFallback,
+    allowUnconfigured: opts.allowUnconfigured,
     rateLimiter: authRateLimiter,
     browserRateLimiter: browserAuthRateLimiter,
     gatewayMethods,

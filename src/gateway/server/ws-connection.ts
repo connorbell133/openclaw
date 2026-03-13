@@ -68,6 +68,8 @@ export type GatewayWsSharedHandlerParams = {
   resolvedAuth: ResolvedGatewayAuth;
   /** When true, allow Host-header origin fallback for CORS checks. */
   allowHostHeaderOriginFallback?: boolean;
+  /** When true, relax device pairing for unconfigured cloud deploys. */
+  allowUnconfigured?: boolean;
   /** Optional rate limiter for auth brute-force protection. */
   rateLimiter?: AuthRateLimiter;
   /** Browser-origin fallback limiter (loopback is never exempt). */
@@ -102,6 +104,7 @@ export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnecti
     canvasHostServerPort,
     resolvedAuth,
     allowHostHeaderOriginFallback,
+    allowUnconfigured: allowUnconfiguredParam,
     rateLimiter,
     browserRateLimiter,
     gatewayMethods,
@@ -293,6 +296,7 @@ export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnecti
       connectNonce,
       resolvedAuth,
       allowHostHeaderOriginFallback,
+      allowUnconfigured: allowUnconfiguredParam,
       rateLimiter,
       browserRateLimiter,
       gatewayMethods,
