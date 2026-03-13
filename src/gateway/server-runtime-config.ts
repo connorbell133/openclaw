@@ -35,6 +35,7 @@ export type GatewayRuntimeConfig = {
   tailscaleMode: "off" | "serve" | "funnel";
   hooksConfig: ReturnType<typeof resolveHooksConfig>;
   canvasHostEnabled: boolean;
+  allowHostHeaderOriginFallback: boolean;
 };
 
 export async function resolveGatewayRuntimeConfig(params: {
@@ -190,5 +191,6 @@ export async function resolveGatewayRuntimeConfig(params: {
     tailscaleMode,
     hooksConfig,
     canvasHostEnabled,
+    allowHostHeaderOriginFallback: dangerouslyAllowHostHeaderOriginFallback,
   };
 }

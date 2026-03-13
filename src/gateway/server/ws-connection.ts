@@ -66,6 +66,8 @@ export type GatewayWsSharedHandlerParams = {
   canvasHostEnabled: boolean;
   canvasHostServerPort?: number;
   resolvedAuth: ResolvedGatewayAuth;
+  /** When true, allow Host-header origin fallback for CORS checks. */
+  allowHostHeaderOriginFallback?: boolean;
   /** Optional rate limiter for auth brute-force protection. */
   rateLimiter?: AuthRateLimiter;
   /** Browser-origin fallback limiter (loopback is never exempt). */
@@ -99,6 +101,7 @@ export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnecti
     canvasHostEnabled,
     canvasHostServerPort,
     resolvedAuth,
+    allowHostHeaderOriginFallback,
     rateLimiter,
     browserRateLimiter,
     gatewayMethods,
@@ -289,6 +292,7 @@ export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnecti
       canvasHostUrl,
       connectNonce,
       resolvedAuth,
+      allowHostHeaderOriginFallback,
       rateLimiter,
       browserRateLimiter,
       gatewayMethods,

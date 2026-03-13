@@ -518,6 +518,7 @@ export async function startGatewayServer(
   } = runtimeConfig;
   let hooksConfig = runtimeConfig.hooksConfig;
   const canvasHostEnabled = runtimeConfig.canvasHostEnabled;
+  const allowHostHeaderOriginFallback = runtimeConfig.allowHostHeaderOriginFallback;
 
   // Create auth rate limiters used by connect/auth flows.
   const rateLimitConfig = cfgAtStart.gateway?.auth?.rateLimit;
@@ -882,6 +883,7 @@ export async function startGatewayServer(
     canvasHostEnabled: Boolean(canvasHost),
     canvasHostServerPort,
     resolvedAuth,
+    allowHostHeaderOriginFallback,
     rateLimiter: authRateLimiter,
     browserRateLimiter: browserAuthRateLimiter,
     gatewayMethods,

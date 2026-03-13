@@ -246,6 +246,8 @@ export function attachGatewayWsMessageHandler(params: {
   canvasHostUrl?: string;
   connectNonce: string;
   resolvedAuth: ResolvedGatewayAuth;
+  /** When true, allow Host-header origin fallback for CORS checks. */
+  allowHostHeaderOriginFallback?: boolean;
   /** Optional rate limiter for auth brute-force protection. */
   rateLimiter?: AuthRateLimiter;
   /** Browser-origin fallback limiter (loopback is never exempt). */
@@ -281,6 +283,7 @@ export function attachGatewayWsMessageHandler(params: {
     canvasHostUrl,
     connectNonce,
     resolvedAuth,
+    allowHostHeaderOriginFallback: allowHostHeaderOriginFallbackParam,
     rateLimiter,
     browserRateLimiter,
     gatewayMethods,
@@ -498,7 +501,8 @@ export function attachGatewayWsMessageHandler(params: {
         const isWebchat = isWebchatConnect(connectParams);
         if (enforceOriginCheckForAnyClient || isControlUi || isWebchat) {
           const hostHeaderOriginFallbackEnabled =
-            configSnapshot.gateway?.controlUi?.dangerouslyAllowHostHeaderOriginFallback === true;
+            configSnapshot.gateway?.controlUi?.dangerouslyAllowHostHeaderOriginFallback === true ||
+            allowHostHeaderOriginFallbackParam === true;
           const originCheck = checkBrowserOrigin({
             requestHost,
             origin: requestOrigin,
