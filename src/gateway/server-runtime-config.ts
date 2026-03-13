@@ -47,6 +47,7 @@ export async function resolveGatewayRuntimeConfig(params: {
   openResponsesEnabled?: boolean;
   auth?: GatewayAuthConfig;
   tailscale?: GatewayTailscaleConfig;
+  allowUnconfigured?: boolean;
 }): Promise<GatewayRuntimeConfig> {
   const bindMode = params.bind ?? params.cfg.gateway?.bind ?? "loopback";
   const customBindHost = params.cfg.gateway?.customBindHost;
@@ -118,8 +119,13 @@ export async function resolveGatewayRuntimeConfig(params: {
   const controlUiAllowedOrigins = (params.cfg.gateway?.controlUi?.allowedOrigins ?? [])
     .map((value) => value.trim())
     .filter(Boolean);
+  // When --allow-unconfigured is passed and no explicit origins are configured,
+  // auto-enable host-header fallback so Docker/cloud deploys work out of the box.
   const dangerouslyAllowHostHeaderOriginFallback =
-    params.cfg.gateway?.controlUi?.dangerouslyAllowHostHeaderOriginFallback === true;
+    params.cfg.gateway?.controlUi?.dangerouslyAllowHostHeaderOriginFallback === true ||
+    (params.allowUnconfigured === true &&
+      controlUiAllowedOrigins.length === 0 &&
+      !isLoopbackHost(bindHost));
 
   assertGatewayAuthConfigured(resolvedAuth, params.cfg.gateway?.auth);
   if (tailscaleMode === "funnel" && authMode !== "password") {

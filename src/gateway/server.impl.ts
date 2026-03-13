@@ -250,6 +250,11 @@ export type GatewayServerOptions = {
    */
   tailscale?: import("../config/config.js").GatewayTailscaleConfig;
   /**
+   * When true, relax startup checks for unconfigured deployments
+   * (e.g. Docker/cloud one-click deploys). Maps to CLI `--allow-unconfigured`.
+   */
+  allowUnconfigured?: boolean;
+  /**
    * Test-only: allow canvas host startup even when NODE_ENV/VITEST would disable it.
    */
   allowCanvasHostInTests?: boolean;
@@ -495,6 +500,7 @@ export async function startGatewayServer(
     openResponsesEnabled: opts.openResponsesEnabled,
     auth: opts.auth,
     tailscale: opts.tailscale,
+    allowUnconfigured: opts.allowUnconfigured,
   });
   const {
     bindHost,

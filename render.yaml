@@ -4,10 +4,7 @@ services:
     runtime: docker
     plan: starter
     healthCheckPath: /health
-    dockerCommand: >-
-      mkdir -p /data/.openclaw &&
-      echo '{"gateway":{"controlUi":{"dangerouslyAllowHostHeaderOriginFallback":true}}}' > /data/.openclaw/config.yaml &&
-      node openclaw.mjs gateway --allow-unconfigured --bind lan --port 8080
+    dockerCommand: node openclaw.mjs gateway --allow-unconfigured --bind lan --port 8080
     envVars:
       - key: PORT
         value: "8080"

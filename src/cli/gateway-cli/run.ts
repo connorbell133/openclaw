@@ -427,6 +427,7 @@ async function runGatewayCommand(opts: GatewayRunOpts) {
           bind,
           auth: authOverride,
           tailscale: tailscaleOverride,
+          allowUnconfigured: opts.allowUnconfigured,
         }),
     });
   } catch (err) {
